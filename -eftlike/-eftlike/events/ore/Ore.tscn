@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://events/ore/ore.png" type="Texture" id=1]
+[ext_resource path="res://events/ore/Ore.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 6.0
+
+[node name="Ore" type="Area2D"]
+z_as_relative = false
+collision_layer = 16
+collision_mask = 6
+script = ExtResource( 2 )
+
+[node name="Ore" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 35.0
+one_shot = true
+
+[node name="drillCol" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="drillCol"]
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="." to="." method="_on_Ore_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_Ore_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="drillCol" to="." method="_on_drillCol_body_entered"]

@@ -1,0 +1,9 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[sub_resource type="DynamicFontData" id=3]
+antialiased = false
+font_path = "res://autoLoads/PublicPixel-0W5Kv.ttf"
+
+[resource]
+size = 25
+font_data = SubResource( 3 )

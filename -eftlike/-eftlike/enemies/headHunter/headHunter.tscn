@@ -1,0 +1,108 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://enemies/headHunter/headHunter.png" type="Texture" id=1]
+[ext_resource path="res://enemies/headHunter/headHunter.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 4.0
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("HeadHunter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 2, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "run"
+length = 0.4
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("HeadHunter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2 )
+}
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+gravity = Vector3( 0, 98, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 100.0
+linear_accel_random = 1.0
+radial_accel = 100.0
+radial_accel_random = 1.0
+tangential_accel = 100.0
+tangential_accel_random = 1.0
+damping = 13.73
+damping_random = 1.0
+angle = 360.0
+angle_random = 1.0
+color = Color( 0.772549, 0.556863, 0.556863, 1 )
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 7.0
+
+[node name="headHunter" type="KinematicBody2D" groups=["enemy"]]
+z_index = 1
+collision_layer = 4
+collision_mask = 118
+script = ExtResource( 2 )
+
+[node name="HeadHunter" type="Sprite" parent="."]
+position = Vector2( 0, -3 )
+texture = ExtResource( 1 )
+hframes = 8
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 2 )
+anims/run = SubResource( 3 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+emitting = false
+explosiveness = 0.56
+process_material = SubResource( 4 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="hitHandler" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="hitHandler"]
+rotation = 4.71239
+enabled = true
+cast_to = Vector2( 0, 5.5 )
+collision_mask = 2
+collide_with_areas = true
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 2.0
+default_color = Color( 0.4, 0.501961, 1, 0 )
+
+[node name="lootCol" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lootCol"]
+shape = SubResource( 5 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="lootCol" to="." method="_on_lootCol_body_entered"]

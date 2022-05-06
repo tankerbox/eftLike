@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://autoLoads/UI.gd" type="Script" id=1]
+[ext_resource path="res://autoLoads/UI.tres" type="DynamicFont" id=2]
+
+[sub_resource type="Theme" id=2]
+default_font = ExtResource( 2 )
+
+[sub_resource type="Theme" id=3]
+default_font = ExtResource( 2 )
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 505.0
+margin_bottom = 203.0
+theme = SubResource( 2 )
+text = "Money
+"
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+margin_left = 116.0
+margin_top = 245.0
+margin_right = 941.0
+margin_bottom = 326.0
+theme = SubResource( 3 )
+text = "		  You Died LOL 
+this is a pre-alpha with the best
+	   gun Git Gud noob"
